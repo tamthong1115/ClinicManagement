@@ -13,3 +13,130 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String
+  password  String
+  email     String
+  role      Role
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  clinics   Clinic[]
+  sentMessages  Message[] @relation("sender")
+  receivedMessages Message[] @relation("recipient")
+}
+
+enum Role {
+  Guest
+  Customer
+  Dentist
+  ClinicOwner
+  SystemAdmin
+}
+
+model Clinic {
+  id        Int       @id @default(autoincrement())
+  name      String
+  address   String
+  phone     String
+  email     String
+  owner     User @relation(fields: [ownerId], references: [id])
+  ownerId   Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  doctors   Doctor[]
+  scheduleSlots ScheduleSlot[]
+}
+
+model Doctor {
+  id        Int       @id @default(autoincrement())
+  name      String
+  specialty String
+  clinic    Clinic    @relation(fields: [clinicId], references: [id])
+  clinicId  Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  appointments Appointment[]
+  treatmentPlans TreatmentPlan[]
+  medicalRecords MedicalRecord[]
+  scheduleSlots ScheduleSlot[] 
+}
+
+model Appointment {
+  id            Int      @id @default(autoincrement())
+  patientName   String
+  appointmentDateTime DateTime
+  doctor        Doctor   @relation(fields: [doctorId], references: [id])
+  doctorId      Int
+  status        AppointmentStatus
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+enum AppointmentStatus {
+  Scheduled
+  Cancelled
+  Completed
+}
+
+// TreatmentPlan model
+model TreatmentPlan {
+  id            Int      @id @default(autoincrement())
+  patientName   String
+  frequency     String   // e.g., monthly, weekly
+  startDateTime DateTime
+  endDateTime   DateTime
+  doctor        Doctor   @relation(fields: [doctorId], references: [id])
+  doctorId      Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// MedicalRecord model
+model MedicalRecord {
+  id         Int      @id @default(autoincrement())
+  patientName String
+  doctor     Doctor   @relation(fields: [doctorId], references: [id])
+  doctorId   Int
+  diagnosis  String
+  treatment  String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+// Message model
+model Message {
+  id            Int      @id @default(autoincrement())
+  sender        User     @relation("sender", fields: [senderId], references: [id])
+  senderId      Int
+  recipient     User     @relation("recipient", fields: [recipientId], references: [id])
+  recipientId   Int
+  content       String
+  sentAt        DateTime @default(now())
+  readAt        DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model ScheduleSlot {
+  id         Int      @id @default(autoincrement())
+  clinic     Clinic   @relation(fields: [clinicId], references: [id])
+  clinicId   Int
+  doctor     Doctor   @relation(fields: [doctorId], references: [id])
+  doctorId   Int
+  startTime  DateTime
+  endTime    DateTime
+  maxPatients Int
+  type       SlotType
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+// Enum for schedule slot type
+enum SlotType {
+  Appointment // for regular appointments with a single visit
+  Treatment // for treatment plans that require multiple visits
+}
+
