@@ -15,18 +15,16 @@ generator client {
 }
 
 model User {
-  user_id    Int       @id @default(autoincrement())
-  phone      String    @unique @db.VarChar(20)
-  password   String    @db.VarChar(255)
-  role       Role
-  Customer   Customer?
-  Dentist    Dentist?
-  Clinic     Clinic?
-  SystemAdmin SystemAdmin?
-
-  // Relation fields
-  sentMessages     Message[] @relation("MessageSender")
-  receivedMessages Message[] @relation("MessageReceiver")
+  user_id          Int          @id @default(autoincrement())
+  phone            String       @unique @db.VarChar(20)
+  password         String       @db.VarChar(255)
+  role             Role
+  Customer         Customer?
+  Dentist          Dentist?
+  Clinic           Clinic?
+  SystemAdmin      SystemAdmin?
+  sentMessages     Message[]    @relation("MessageSender")
+  receivedMessages Message[]    @relation("MessageReceiver")
 }
 
 enum Role {
@@ -37,69 +35,68 @@ enum Role {
 }
 
 model Customer {
-  customer_id         Int          @id @default(autoincrement())
-  user_id             Int          @unique
-  name                String       @db.VarChar(255)
-  email               String       @db.VarChar(255)
-  address             String       @db.VarChar(255)
-  date_of_birth       DateTime    @db.Timestamp(6)
+  customer_id         Int                  @id @default(autoincrement())
+  user_id             Int                  @unique
+  name                String               @db.VarChar(255)
+  email               String?              @db.VarChar(255)
+  address             String?              @db.VarChar(255)
+  date_of_birth       DateTime?            @db.Timestamp(6)
   appointments        Appointment[]
   periodic_treatments PeriodicTreatment[]
-  User                User         @relation(fields: [user_id], references: [user_id])
+  User                User                 @relation(fields: [user_id], references: [user_id])
+  invoices            Invoice[]
 }
 
 model Dentist {
-  dentist_id   Int          @id @default(autoincrement())
-  user_id      Int          @unique
-  name         String       @db.VarChar(255)
-  email        String       @db.VarChar(255)
-  specialization String     @db.VarChar(255)
-  certificate  String[]     @db.VarChar(255)  // img url
-  isApproved   Boolean      @default(false)
-  appointments Appointment[]
+  dentist_id          Int                  @id @default(autoincrement())
+  user_id             Int                  @unique
+  name                String               @db.VarChar(255)
+  email               String               @db.VarChar(255)
+  specialization      String               @db.VarChar(255)
+  certificate         String[]             @db.VarChar(255)  // img url
+  isApproved          Boolean              @default(false)
+  appointments        Appointment[]
   periodic_treatments PeriodicTreatment[]
-  User         User         @relation(fields: [user_id], references: [user_id])
-
-  clinics      Clinic[]
+  User                User                 @relation(fields: [user_id], references: [user_id])
+  clinics             Clinic[]
+  invoices            Invoice[]
 }
 
 model Clinic {
-  clinic_id      Int         @id @default(autoincrement())
-  user_id        Int         @unique
-  name           String      @db.VarChar(255)
-  address        String      @db.VarChar(255)
-  email          String      @db.VarChar(255)
-  open_time      DateTime   @db.Time(6)
-  close_time     DateTime   @db.Time(6)
-  time_slot      Int         // duration in minutes
-  image         String[]      @db.VarChar(255)
+  clinic_id           Int                  @id @default(autoincrement())
+  user_id             Int                  @unique
+  name                String               @db.VarChar(255)
+  address             String               @db.VarChar(255)
+  email               String               @db.VarChar(255)
+  open_time           DateTime             @db.Time(6)
+  close_time          DateTime             @db.Time(6)
+  time_slot           Int                  // duration in minutes
+  image               String[]             @db.VarChar(255)
   max_patients_per_slot Int
   max_treatments_per_slot Int
-  appointments   Appointment[]
-  PeriodicTreatments PeriodicTreatment[] 
-  User           User        @relation(fields: [user_id], references: [user_id])
-
-  // Relation to Dentist
-  dentists       Dentist[]
-
-  latitude               Decimal       @db.Decimal
-  longitude              Decimal       @db.Decimal
+  appointments        Appointment[]
+  periodic_treatments PeriodicTreatment[]
+  User                User                 @relation(fields: [user_id], references: [user_id])
+  dentists            Dentist[]
+  latitude            Decimal              @db.Decimal
+  longitude           Decimal              @db.Decimal
+  invoices            Invoice[]
 }
 
-
-
 model Appointment {
-  appointment_id Int          @id @default(autoincrement())
-  customer_id    Int
-  dentist_id     Int
-  clinic_id      Int
-  date           DateTime    @db.Timestamp(6)
-  start_time     DateTime    @db.Time(6)
-  end_time       DateTime    @db.Time(6)
-  status         AppointmentStatus
-  Customer       Customer     @relation(fields: [customer_id], references: [customer_id])
-  Dentist        Dentist      @relation(fields: [dentist_id], references: [dentist_id])
-  Clinic         Clinic       @relation(fields: [clinic_id], references: [clinic_id])
+  appointment_id      Int                  @id @default(autoincrement())
+  customer_id         Int
+  dentist_id          Int
+  clinic_id           Int
+  date                DateTime             @db.Timestamp(6)
+  start_time          DateTime             @db.Time(6)
+  total_charge        Float
+  discount            Float?
+  status              AppointmentStatus
+  Customer            Customer             @relation(fields: [customer_id], references: [customer_id])
+  Dentist             Dentist              @relation(fields: [dentist_id], references: [dentist_id])
+  Clinic              Clinic               @relation(fields: [clinic_id], references: [clinic_id])
+  Invoice             Invoice?
 }
 
 enum AppointmentStatus {
@@ -110,31 +107,57 @@ enum AppointmentStatus {
 }
 
 model PeriodicTreatment {
-  periodic_treatment_id Int      @id @default(autoincrement())
+  periodic_treatment_id Int                  @id @default(autoincrement())
   customer_id           Int
   dentist_id            Int
   clinic_id             Int
-  treatment_type        String   @db.VarChar(255)
-  start_date            DateTime @db.Timestamp(6)
-  end_date              DateTime @db.Timestamp(6)
-  frequency             Int      // frequency in months
-  Customer              Customer @relation(fields: [customer_id], references: [customer_id])
-  Dentist               Dentist  @relation(fields: [dentist_id], references: [dentist_id])
-  Clinic                Clinic   @relation(fields: [clinic_id], references: [clinic_id])
+  treatment_type        String               @db.VarChar(255)
+  start_date            DateTime             @db.Timestamp(6)
+  end_date              DateTime             @db.Timestamp(6)
+  frequency             Int                  // frequency in months
+  charge_per_periodic   Float
+  discount              Float?
+  Customer              Customer             @relation(fields: [customer_id], references: [customer_id])
+  Dentist               Dentist              @relation(fields: [dentist_id], references: [dentist_id])
+  Clinic                Clinic               @relation(fields: [clinic_id], references: [clinic_id])
+  Invoice               Invoice?
+}
+
+model Invoice { 
+  invoice_id             Int                  @id @default(autoincrement())
+  customer_id            Int
+  dentist_id             Int
+  clinic_id              Int
+  appointment_id         Int?                 @unique
+  periodic_treatment_id  Int?                 @unique
+  total_charge           Float
+  discount               Float?
+  payment_status         PaymentStatus
+  Customer               Customer             @relation(fields: [customer_id], references: [customer_id])
+  Dentist                Dentist              @relation(fields: [dentist_id], references: [dentist_id])
+  Clinic                 Clinic               @relation(fields: [clinic_id], references: [clinic_id])
+  Appointment            Appointment?         @relation(fields: [appointment_id], references: [appointment_id])
+  PeriodicTreatment      PeriodicTreatment?   @relation(fields: [periodic_treatment_id], references: [periodic_treatment_id])
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  CANCELLED
 }
 
 model Message {
-  message_id    Int      @id @default(autoincrement())
+  message_id    Int                  @id @default(autoincrement())
   sender_id     Int
   receiver_id   Int
-  content       String   @db.VarChar(255)
-  sent_at       DateTime @default(now()) @db.Timestamp(6)
-  Sender        User     @relation("MessageSender", fields: [sender_id], references: [user_id])
-  Receiver      User     @relation("MessageReceiver", fields: [receiver_id], references: [user_id])
+  content       String               @db.VarChar(255)
+  sent_at       DateTime             @default(now()) @db.Timestamp(6)
+  Sender        User                 @relation("MessageSender", fields: [sender_id], references: [user_id])
+  Receiver      User                 @relation("MessageReceiver", fields: [receiver_id], references: [user_id])
 }
 
 model SystemAdmin {
-  admin_id   Int      @id @default(autoincrement())
-  user_id    Int      @unique
-  User       User     @relation(fields: [user_id], references: [user_id])
+  admin_id      Int                  @id @default(autoincrement())
+  user_id       Int                  @unique
+  User          User                 @relation(fields: [user_id], references: [user_id])
 }
