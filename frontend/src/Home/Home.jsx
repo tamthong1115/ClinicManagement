@@ -74,6 +74,16 @@ const Home = () => {
           <div className="sub-title">news</div>
           <div className="descriptions">description</div>
         </div>
+        <div className="services">
+          <img className="thumbnail" src="#" alt="" />
+          <div className="sub-title">news</div>
+          <div className="descriptions">description</div>
+        </div>
+        <div className="services">
+          <img className="thumbnail" src="#" alt="" />
+          <div className="sub-title">news</div>
+          <div className="descriptions">description</div>
+        </div>
       </div>
     </div>
   );
