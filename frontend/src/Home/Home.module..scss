@@ -1,0 +1,28 @@
+.img-banner {
+  width: 50%;
+  height: 50%;
+  margin: 1% 25% 0 25%;
+}
+
+/*xu li cac doi tuong thuoc descritption*/
+.sub-description-container {
+  background-color: skyblue;
+  width: auto;
+  height: auto;
+  display: flex;
+  text-align: center;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.sub-description {
+  width: auto;
+  flex: 1;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 2px solid black;
+}
+img.sub-thumbnail {
+  background-color: black;
+  width: inherit;
+  height: inherit;
+}
