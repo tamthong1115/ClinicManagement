@@ -65,6 +65,7 @@ model Dentist {
 model Clinic {
   clinic_id           Int                  @id @default(autoincrement())
   user_id             Int                  @unique
+  discount_id         Int
   name                String               @db.VarChar(255)
   address             String               @db.VarChar(255)
   email               String               @db.VarChar(255)
@@ -81,6 +82,8 @@ model Clinic {
   latitude            Decimal              @db.Decimal
   longitude           Decimal              @db.Decimal
   invoices            Invoice[]
+  discount            Discount[]
+
 }
 
 model Appointment {
@@ -88,15 +91,17 @@ model Appointment {
   customer_id         Int
   dentist_id          Int
   clinic_id           Int
+  discount_id            Int
   date                DateTime             @db.Timestamp(6)
   start_time          DateTime             @db.Time(6)
   total_charge        Float
-  discount            Float?
   status              AppointmentStatus
   Customer            Customer             @relation(fields: [customer_id], references: [customer_id])
   Dentist             Dentist              @relation(fields: [dentist_id], references: [dentist_id])
   Clinic              Clinic               @relation(fields: [clinic_id], references: [clinic_id])
   Invoice             Invoice?
+  discount            Discount[]
+
 }
 
 enum AppointmentStatus {
@@ -111,16 +116,18 @@ model PeriodicTreatment {
   customer_id           Int
   dentist_id            Int
   clinic_id             Int
+  discount_id            Int
   treatment_type        String               @db.VarChar(255)
   start_date            DateTime             @db.Timestamp(6)
   end_date              DateTime             @db.Timestamp(6)
   frequency             Int                  // frequency in months
   charge_per_periodic   Float
-  discount              Float?
   Customer              Customer             @relation(fields: [customer_id], references: [customer_id])
   Dentist               Dentist              @relation(fields: [dentist_id], references: [dentist_id])
   Clinic                Clinic               @relation(fields: [clinic_id], references: [clinic_id])
   Invoice               Invoice?
+  discount               Discount[]
+
 }
 
 model Invoice { 
@@ -128,17 +135,31 @@ model Invoice {
   customer_id            Int
   dentist_id             Int
   clinic_id              Int
+  discount_id            Int
   appointment_id         Int?                 @unique
   periodic_treatment_id  Int?                 @unique
   total_charge           Float
-  discount               Float?
   payment_status         PaymentStatus
   Customer               Customer             @relation(fields: [customer_id], references: [customer_id])
   Dentist                Dentist              @relation(fields: [dentist_id], references: [dentist_id])
   Clinic                 Clinic               @relation(fields: [clinic_id], references: [clinic_id])
   Appointment            Appointment?         @relation(fields: [appointment_id], references: [appointment_id])
   PeriodicTreatment      PeriodicTreatment?   @relation(fields: [periodic_treatment_id], references: [periodic_treatment_id])
+  discount               Discount[]
 }
+
+model Discount {
+  discount_id           Int                  @id @default(autoincrement())
+  code                   String               @unique @db.VarChar(255)
+  pertentage             Float               
+  start_date             DateTime             @db.Timestamp(6)
+  end_date               DateTime             @db.Timestamp(6)
+  invoices               Invoice[]
+  appointments           Appointment[]
+  periodic_treatments    PeriodicTreatment[]
+  clinics                Clinic[]
+}
+
 
 enum PaymentStatus {
   PENDING
