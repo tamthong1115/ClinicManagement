@@ -15,128 +15,126 @@ generator client {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String
-  password  String
-  email     String
-  role      Role
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  clinics   Clinic[]
-  sentMessages  Message[] @relation("sender")
-  receivedMessages Message[] @relation("recipient")
+  user_id    Int       @id @default(autoincrement())
+  phone      String    @unique @db.VarChar(20)
+  password   String    @db.VarChar(255)
+  role       Role
+  Customer   Customer?
+  Dentist    Dentist?
+  Clinic     Clinic?
+  SystemAdmin SystemAdmin?
+
+  // Relation fields
+  sentMessages     Message[] @relation("MessageSender")
+  receivedMessages Message[] @relation("MessageReceiver")
 }
 
 enum Role {
-  Guest
-  Customer
-  Dentist
-  ClinicOwner
-  SystemAdmin
+  CUSTOMER
+  DENTIST
+  CLINIC_OWNER
+  SYSTEM_ADMIN
+}
+
+model Customer {
+  customer_id         Int          @id @default(autoincrement())
+  user_id             Int          @unique
+  name                String       @db.VarChar(255)
+  email               String       @db.VarChar(255)
+  address             String       @db.VarChar(255)
+  date_of_birth       DateTime    @db.Timestamp(6)
+  appointments        Appointment[]
+  periodic_treatments PeriodicTreatment[]
+  User                User         @relation(fields: [user_id], references: [user_id])
+}
+
+model Dentist {
+  dentist_id   Int          @id @default(autoincrement())
+  user_id      Int          @unique
+  name         String       @db.VarChar(255)
+  email        String       @db.VarChar(255)
+  specialization String     @db.VarChar(255)
+  certificate  String[]     @db.VarChar(255)  // img url
+  isApproved   Boolean      @default(false)
+  appointments Appointment[]
+  periodic_treatments PeriodicTreatment[]
+  User         User         @relation(fields: [user_id], references: [user_id])
+
+  clinics      Clinic[]
 }
 
 model Clinic {
-  id        Int       @id @default(autoincrement())
-  name      String
-  address   String
-  phone     String
-  email     String
-  owner     User @relation(fields: [ownerId], references: [id])
-  ownerId   Int
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  doctors   Doctor[]
-  scheduleSlots ScheduleSlot[]
+  clinic_id      Int         @id @default(autoincrement())
+  user_id        Int         @unique
+  name           String      @db.VarChar(255)
+  address        String      @db.VarChar(255)
+  email          String      @db.VarChar(255)
+  open_time      DateTime   @db.Time(6)
+  close_time     DateTime   @db.Time(6)
+  time_slot      Int         // duration in minutes
+  image         String[]      @db.VarChar(255)
+  max_patients_per_slot Int
+  max_treatments_per_slot Int
+  appointments   Appointment[]
+  PeriodicTreatments PeriodicTreatment[] 
+  User           User        @relation(fields: [user_id], references: [user_id])
+
+  // Relation to Dentist
+  dentists       Dentist[]
+
+  latitude               Decimal       @db.Decimal
+  longitude              Decimal       @db.Decimal
 }
 
-model Doctor {
-  id        Int       @id @default(autoincrement())
-  name      String
-  specialty String
-  clinic    Clinic    @relation(fields: [clinicId], references: [id])
-  clinicId  Int
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
 
-  appointments Appointment[]
-  treatmentPlans TreatmentPlan[]
-  medicalRecords MedicalRecord[]
-  scheduleSlots ScheduleSlot[] 
-}
 
 model Appointment {
-  id            Int      @id @default(autoincrement())
-  patientName   String
-  appointmentDateTime DateTime
-  doctor        Doctor   @relation(fields: [doctorId], references: [id])
-  doctorId      Int
-  status        AppointmentStatus
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  appointment_id Int          @id @default(autoincrement())
+  customer_id    Int
+  dentist_id     Int
+  clinic_id      Int
+  date           DateTime    @db.Timestamp(6)
+  start_time     DateTime    @db.Time(6)
+  end_time       DateTime    @db.Time(6)
+  status         AppointmentStatus
+  Customer       Customer     @relation(fields: [customer_id], references: [customer_id])
+  Dentist        Dentist      @relation(fields: [dentist_id], references: [dentist_id])
+  Clinic         Clinic       @relation(fields: [clinic_id], references: [clinic_id])
 }
 
 enum AppointmentStatus {
-  Scheduled
-  Cancelled
-  Completed
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
 }
 
-// TreatmentPlan model
-model TreatmentPlan {
-  id            Int      @id @default(autoincrement())
-  patientName   String
-  frequency     String   // e.g., monthly, weekly
-  startDateTime DateTime
-  endDateTime   DateTime
-  doctor        Doctor   @relation(fields: [doctorId], references: [id])
-  doctorId      Int
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+model PeriodicTreatment {
+  periodic_treatment_id Int      @id @default(autoincrement())
+  customer_id           Int
+  dentist_id            Int
+  clinic_id             Int
+  treatment_type        String   @db.VarChar(255)
+  start_date            DateTime @db.Timestamp(6)
+  end_date              DateTime @db.Timestamp(6)
+  frequency             Int      // frequency in months
+  Customer              Customer @relation(fields: [customer_id], references: [customer_id])
+  Dentist               Dentist  @relation(fields: [dentist_id], references: [dentist_id])
+  Clinic                Clinic   @relation(fields: [clinic_id], references: [clinic_id])
 }
 
-// MedicalRecord model
-model MedicalRecord {
-  id         Int      @id @default(autoincrement())
-  patientName String
-  doctor     Doctor   @relation(fields: [doctorId], references: [id])
-  doctorId   Int
-  diagnosis  String
-  treatment  String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-}
-
-// Message model
 model Message {
-  id            Int      @id @default(autoincrement())
-  sender        User     @relation("sender", fields: [senderId], references: [id])
-  senderId      Int
-  recipient     User     @relation("recipient", fields: [recipientId], references: [id])
-  recipientId   Int
-  content       String
-  sentAt        DateTime @default(now())
-  readAt        DateTime?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  message_id    Int      @id @default(autoincrement())
+  sender_id     Int
+  receiver_id   Int
+  content       String   @db.VarChar(255)
+  sent_at       DateTime @default(now()) @db.Timestamp(6)
+  Sender        User     @relation("MessageSender", fields: [sender_id], references: [user_id])
+  Receiver      User     @relation("MessageReceiver", fields: [receiver_id], references: [user_id])
 }
 
-model ScheduleSlot {
-  id         Int      @id @default(autoincrement())
-  clinic     Clinic   @relation(fields: [clinicId], references: [id])
-  clinicId   Int
-  doctor     Doctor   @relation(fields: [doctorId], references: [id])
-  doctorId   Int
-  startTime  DateTime
-  endTime    DateTime
-  maxPatients Int
-  type       SlotType
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+model SystemAdmin {
+  admin_id   Int      @id @default(autoincrement())
+  user_id    Int      @unique
+  User       User     @relation(fields: [user_id], references: [user_id])
 }
-
-// Enum for schedule slot type
-enum SlotType {
-  Appointment // for regular appointments with a single visit
-  Treatment // for treatment plans that require multiple visits
-}
-
