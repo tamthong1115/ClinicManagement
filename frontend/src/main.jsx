@@ -1,10 +1,14 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
+import Header from "./Pages/Header/Header.jsx"
+import Navbar from "./Pages/Header/navbar.jsx"
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+function App() {
+    return(
+        <>
+        <Header/>
+        <Navbar/>
+        </>
+    );
+};
+
+export default App
+
