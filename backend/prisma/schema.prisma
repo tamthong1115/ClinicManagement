@@ -19,6 +19,8 @@ model User {
   username         String       @unique @db.VarChar(25)
   password         String       @db.VarChar(255)
   role             Role         @default(CUSTOMER)
+  first_name       String?
+  last_name        String?
   Customer         Customer?
   Dentist          Dentist?
   Clinic           Clinic?
