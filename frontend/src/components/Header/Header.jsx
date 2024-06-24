@@ -14,8 +14,13 @@ const Header = () => {
   return (
     <div>
       <div className={cx("header")}>
+        <img
+          className={cx("thumbnail")}
+          src="D:/Develop/DevWed by VSCode/ClinicManagement/ClinicManagement/frontend/src/components/Header/thumbnail_header.png"
+          alt="thumbnail"
+        />
         <span className={cx("logo")}>
-          <Link to="/">Booking.com</Link>
+          <Link to="/">Republic Clinic</Link>
         </span>
 
         <span className={cx("right")}>

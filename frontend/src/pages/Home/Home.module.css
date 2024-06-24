@@ -28,15 +28,33 @@
   margin-bottom: 30px;
 }
 
+/*xu li thanh phan card*/
+.cardsContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
 .card {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
   border-radius: 8px;
   margin: 10px;
+  width: 300px;
+  height: auto;
 }
 
-.cardsContainer {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+.cardThumbnail {
+  text-align: center;
+  height: 50%;
+}
+
+.cardTitle {
+  text-align: center;
+}
+
+.cardContent {
+  text-align: center;
+  padding-top: 20px;
+  margin-bottom: 30px;
 }

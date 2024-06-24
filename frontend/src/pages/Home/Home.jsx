@@ -16,23 +16,47 @@ const Home = () => {
         <button>Make an Appointment</button>
       </section>
       <section id="services" className={styles.services}>
-        <h3 className={styles.sectionTitle}>Our Services</h3>
+        <h3 className={styles.sectionTitle}>Our Promises</h3>
+
         <div className={styles.cardsContainer}>
-          <div className={styles.card}>General Medicine</div>
-          <div className={styles.card}>Pediatrics</div>
-          <div className={styles.card}>Dentistry</div>
+          <div className={styles.card}>
+            <img className={styles.cardThumbnail} src="./pic_1.jpg" alt="" />
+            <div className={styles.cardTitle}>General Medicine</div>
+            <div className={styles.cardContent}>
+              Den voi phong kham cua chung toi
+            </div>
+          </div>
+
+          <div className={styles.card}>
+            <img className={styles.cardThumbnail} src="./pic_2.png" alt="" />
+            <div className={styles.cardTitle}>Pediatrics</div>
+            <div className={styles.cardContent}>
+              Tu hao vi doi ngu chuyen nghiep
+            </div>
+          </div>
+
+          <div className={styles.card}>
+            <img className={styles.cardThumbnail} src="./pic_3.png" alt="" />
+            <div className={styles.cardTitle}>Dentistry</div>
+            <div className={styles.cardContent}></div>
+          </div>
         </div>
       </section>
       <section id="about" className={styles.about}>
         <h3 className={styles.sectionTitle}>About Us</h3>
-        <p>
-          We are a team of dedicated healthcare professionals here to serve you.
-        </p>
+        <center>
+          <p>
+            We are a team of dedicated healthcare professionals here to serve
+            you.
+          </p>
+        </center>
       </section>
       <section id="contact" className={styles.contact}>
         <h3 className={styles.sectionTitle}>Contact Us</h3>
-        <p>Email: contact@clinicplus.com</p>
-        <p>Phone: (123) 456-7890</p>
+        <center>
+          <p>Email: contact@clinicplus.com</p>
+          <p>Phone: (123) 456-7890</p>
+        </center>
       </section>
     </div>
   );
