@@ -6,6 +6,7 @@ import { faCircleQuestion } from "@fortawesome/free-regular-svg-icons";
 import UserMenu from "../Dropdown/UserMenu.jsx";
 import styles from "./Header.module.scss";
 import classNames from "classnames/bind";
+import thumbnail from "./thumbnail_header.png";
 
 const cx = classNames.bind(styles);
 
@@ -15,8 +16,13 @@ const Header = () => {
     <div>
       <div className={cx("header")}>
         <img
-          className={cx("thumbnail")}
-          src="D:/Develop/DevWed by VSCode/ClinicManagement/ClinicManagement/frontend/src/components/Header/thumbnail_header.png"
+          style={{
+            width: "10%",
+            borderRadius: "50%",
+            boxShadow: "2px 5px 10px rgba(0, 0, 0, 0.5)",
+          }}
+          className={cx(thumbnail)}
+          src={thumbnail}
           alt="thumbnail"
         />
         <span className={cx("logo")}>

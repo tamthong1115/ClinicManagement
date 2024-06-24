@@ -11,6 +11,10 @@
   padding: 10px 0;
 }
 
+.navbar a:hover {
+  color: #487be7;
+}
+
 .hero {
   text-align: center;
   padding: 50px 20px;
@@ -39,13 +43,14 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
   border-radius: 8px;
-  margin: 10px;
+  margin: 10px 10px 0;
   width: 300px;
   height: auto;
 }
 
-.cardThumbnail {
+img .cardThumbnail {
   text-align: center;
+  align-items: center;
   height: 50%;
 }
 
@@ -56,5 +61,4 @@
 .cardContent {
   text-align: center;
   padding-top: 20px;
-  margin-bottom: 30px;
 }

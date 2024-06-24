@@ -1,4 +1,7 @@
 import styles from "./Home.module.css";
+import pic_1 from "./pic_1.jpg";
+import pic_2 from "./pic_2.png";
+import pic_3 from "./pic_3.png";
 
 const Home = () => {
   return (
@@ -6,39 +9,42 @@ const Home = () => {
       <nav className={styles.navbar}>
         <h1>Clinic+</h1>
         <div>
-          <a href="#services">Services</a> | <a href="#about">About Us</a> |{" "}
-          <a href="#contact">Contact</a>
+          <a href="#services">Các dịch vụ</a> |{" "}
+          <a href="#about">Về chúng tôi</a> | <a href="#contact">Liên hệ</a>
         </div>
       </nav>
       <section className={styles.hero}>
-        <h2>Welcome to Clinic+</h2>
-        <p>Your health is our top priority.</p>
+        <h2>Chào mừng bạn đến với phòng khám nha khoa Cộng Hòa</h2>
+        <p>Sức khỏe răng miệng là sự ưu tiên hàng đầu của chúng tôi</p>
         <button>Make an Appointment</button>
       </section>
       <section id="services" className={styles.services}>
-        <h3 className={styles.sectionTitle}>Our Promises</h3>
+        <h3 className={styles.sectionTitle}>Sự tự hào của chúng tôi</h3>
 
         <div className={styles.cardsContainer}>
           <div className={styles.card}>
-            <img className={styles.cardThumbnail} src="./pic_1.jpg" alt="" />
+            <img className={styles.cardThumbnail} src={pic_1} alt="" />
             <div className={styles.cardTitle}>General Medicine</div>
             <div className={styles.cardContent}>
-              Den voi phong kham cua chung toi
+              Đến với phòng khám của chúng tôi
             </div>
           </div>
 
           <div className={styles.card}>
-            <img className={styles.cardThumbnail} src="./pic_2.png" alt="" />
+            <img className={styles.cardThumbnail} src={pic_2} alt="" />
             <div className={styles.cardTitle}>Pediatrics</div>
             <div className={styles.cardContent}>
-              Tu hao vi doi ngu chuyen nghiep
+              Chúng tôi tự hào vì một đội ngũ y - bác sĩ chuyên nghiệp
             </div>
           </div>
 
           <div className={styles.card}>
-            <img className={styles.cardThumbnail} src="./pic_3.png" alt="" />
+            <img className={styles.cardThumbnail} src={pic_3} alt="" />
             <div className={styles.cardTitle}>Dentistry</div>
-            <div className={styles.cardContent}></div>
+            <div className={styles.cardContent}>
+              Đạt được những thành tựu to lớn, tự hào là 1 trong top 100 phòng
+              khám nha sĩ tốt nhất Việt Nam
+            </div>
           </div>
         </div>
       </section>
