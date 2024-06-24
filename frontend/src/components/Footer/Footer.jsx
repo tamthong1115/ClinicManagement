@@ -79,18 +79,18 @@ function Footer() {
               253/6, Ward 11, District 2, City. Ho Chi Minh
             </p>
             <p className="mb-2 ">0984 777 666</p>
-            <p className="mb-2 ">republicClinic@gmail.com</p>
+            <p className="mb-2 ">Clinic+@gmail.com</p>
           </div>
         </div>
       </div>
       <div className="mt-8 border-t-4 border-white p-4 sm:grid-cols-1 lg:grid-cols-2">
         <center>
           <p className="mb-4">
-            Copyright © 1996–2024 RepublicClinic.com™. All rights reserved.
+            Copyright © 1996–2024 ClinicPlus.com™. All rights reserved.
           </p>
         </center>
         <center>
-          <h3 className="text-2xl">RepublicClinic.com</h3>
+          <h3 className="text-2xl">ClinicPlus.com</h3>
         </center>
       </div>
     </div>

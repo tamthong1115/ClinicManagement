@@ -1,53 +1,289 @@
 import styles from "./Home.module.css";
-import pic_1 from "./pic_1.jpg";
-import pic_2 from "./pic_2.png";
-import pic_3 from "./pic_3.png";
+import React, { useRef, useEffect } from "react";
+
+function GetHeigth() {
+  const eleRef = useRef(null);
+  useEffect(() => {
+    if (eleRef.current) {
+      const height = eleRef.current.clientHeight;
+      return height + 10;
+    }
+  }, []);
+}
 
 const Home = () => {
   return (
     <div className={styles.container}>
+      <img
+        style={{ boxShadow: "none" }}
+        src="../public/Home_Resources/Cover-Image.png"
+        alt
+      ></img>
+
       <nav className={styles.navbar}>
         <h1>Clinic+</h1>
         <div>
           <a href="#services">Các dịch vụ</a> |{" "}
-          <a href="#about">Về chúng tôi</a> | <a href="#contact">Liên hệ</a>
+          <a href="#about">Về chúng tôi</a> | <a href="#contact">LIên hệ</a>
         </div>
       </nav>
-      <section className={styles.hero}>
-        <h2>Chào mừng bạn đến với phòng khám nha khoa Cộng Hòa</h2>
-        <p>Sức khỏe răng miệng là sự ưu tiên hàng đầu của chúng tôi</p>
-        <button>Make an Appointment</button>
-      </section>
-      <section id="services" className={styles.services}>
-        <h3 className={styles.sectionTitle}>Sự tự hào của chúng tôi</h3>
 
+      <section className={styles.hero}>
+        <h2>Chào mừng bạn đến với Clinic+</h2>
+        <p>Sức khỏe răng miệng của bạn là ưu tiên hàng đầu của chúng tôi.</p>
+        <p>
+          Đặt lịch ngay hôm nay để nhận nhiều ưu đãi hấp dẫn. Nhanh tay lên nào
+          mọi người ơi!
+        </p>
+        <button type="button">Đặt lịch ngay!!!</button>
+      </section>
+
+      <section id="services" className={styles.services}>
+        <h3 style={{ fontWeight: "bold" }} className={styles.sectionTitle}>
+          TẠI SAO NÊN CHỌN HỆ THỐNG NHA KHOA CLINIC+?
+        </h3>
         <div className={styles.cardsContainer}>
           <div className={styles.card}>
-            <img className={styles.cardThumbnail} src={pic_1} alt="" />
-            <div className={styles.cardTitle}>General Medicine</div>
+            <img
+              className={styles.cardThumbnail}
+              src="../public/Home_Resources/pic_1_home.jpg"
+              alt=""
+            />
+            <div className={styles.cardTitle}>Bác sĩ chuyên môn cao</div>
             <div className={styles.cardContent}>
-              Đến với phòng khám của chúng tôi
+              Hội tụ hơn 20 bác sĩ chuyên nghiệp hàng đầu, đầy đủ bằng cấp,
+              chứng chỉ hành nghề, thành thạo tay nghề ít nhất 2 năm, được đào
+              tạo nâng cao chuyên môn hàng tuần, đã điều trị thành công cho hơn
+              20 000 ca Ths, Bs Nguyễn Quang Tiến, Thạc sĩ niềng răng Đại học Y
+              Khoa quốc tế Munster, CHLB Đức, cố vấn và đào tạo. Tác giả sách
+              “Niềng răng hiểu đúng hiểu đủ”
+            </div>
+          </div>
+
+          <div
+            style={{ backgroundColor: "#9984f9", color: "white" }}
+            className={styles.card}
+          >
+            <img
+              className={styles.cardThumbnail}
+              src="../public/Home_Resources/pic_2_home.png"
+              alt=""
+            />
+            <div className={styles.cardTitle}>Cơ sở vật chất hiện đại</div>
+            <div className={styles.cardContent}>
+              Phòng khám đạt chuẩn vô trùng. Có máy chụp phim chuyên niềng răng
+              Panorex – Ceph (bắt buộc sử dụng khi thăm khám và lên kế hoạch
+              điều trị), công nghệ siêu âm Piezotome nhổ không đau… Luôn cập
+              nhật kỹ thuật, công nghệ nha khoa tiên tiến hàng đầu thế giới để
+              áp dụng cho các ca chăm sóc răng miệng của khách hàng.
             </div>
           </div>
 
           <div className={styles.card}>
-            <img className={styles.cardThumbnail} src={pic_2} alt="" />
-            <div className={styles.cardTitle}>Pediatrics</div>
+            <img
+              className={styles.cardThumbnail}
+              src="../public/Home_Resources/pic_3_home.png"
+              alt=""
+            />
+            <div className={styles.cardTitle}>Hệ thống nha khoa</div>
             <div className={styles.cardContent}>
-              Chúng tôi tự hào vì một đội ngũ y - bác sĩ chuyên nghiệp
-            </div>
-          </div>
-
-          <div className={styles.card}>
-            <img className={styles.cardThumbnail} src={pic_3} alt="" />
-            <div className={styles.cardTitle}>Dentistry</div>
-            <div className={styles.cardContent}>
-              Đạt được những thành tựu to lớn, tự hào là 1 trong top 100 phòng
-              khám nha sĩ tốt nhất Việt Nam
+              Được thành lập từ năm 2005 & được cấp giấy phép hành nghề. Trải
+              qua nhiều năm phát triển, đến nay Nha Khoa Đăng Lưu đã có Hệ thống
+              rộng lớn gồm 16 chi nhánh trải khắp Tp.HCM, Tp.Thủ Đức, Tp.Cần Thơ
+              và Tp.Mỹ Tho. Dự kiến trong tương lai sẽ mở rộng thêm nhiều chi
+              nhánh mới, giúp người dân dễ dàng tiếp cận địa chỉ niềng răng,
+              chăm sóc răng miệng uy tín hàng đầu.
             </div>
           </div>
         </div>
       </section>
+
+      <section id="info" className={styles.info}>
+        <div style={{ width: "500px" }} className={styles.card}>
+          <center>
+            <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
+              TIN TỨC
+            </h3>
+          </center>
+          <table>
+            <tr>
+              <td style={{ width: "40%" }} rowSpan={2}>
+                <img src="/Home_Resources/News_1.jpg" alt="true" />
+              </td>
+              <th style={{}}>News_1</th>
+            </tr>
+            <tr>
+              <td
+                style={{
+                  width: "60%",
+                  paddingLeft: "10px",
+                  paddingBottom: "10px",
+                  textAlign: "left",
+                }}
+              >
+                this is the first news. If you want to change it, please contact
+                to the system administrator.
+              </td>
+            </tr>
+
+            <tr>
+              <td style={{ width: "30%" }} rowSpan={2}>
+                <img src="/Home_Resources/News_2.jpg" alt="true" />
+              </td>
+              <th>News_2</th>
+            </tr>
+            <tr>
+              <td
+                style={{
+                  width: "60%",
+                  paddingLeft: "10px",
+                  paddingBottom: "10px",
+                  textAlign: "left",
+                }}
+              >
+                this is the second news. If you want to change it, please
+                contact to the system administrator.
+              </td>
+            </tr>
+
+            <tr>
+              <td style={{ width: "30%" }} rowSpan={2}>
+                <img src="/Home_Resources/News_3.jpg" alt="" />
+              </td>
+              <th>News_3</th>
+            </tr>
+            <tr>
+              <td
+                style={{
+                  width: "60%",
+                  paddingLeft: "10px",
+                  paddingBottom: "10px",
+                  textAlign: "left",
+                }}
+              >
+                this is the third news. If you want to change it, please contact
+                to the system administrator.
+              </td>
+            </tr>
+
+            <tr>
+              <td style={{ width: "30%" }} rowSpan={2}>
+                <img src="/Home_Resources/News_4.jpg" alt="" />
+              </td>
+              <th>News_4</th>
+            </tr>
+            <tr>
+              <td
+                style={{
+                  width: "60%",
+                  paddingLeft: "10px",
+                  paddingBottom: "10px",
+                  textAlign: "left",
+                }}
+              >
+                this is the fourth news
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div className={styles.promotion}>
+          <div style={{ width: "500px" }} className={styles.card}>
+            <center>
+              <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
+                KHUYẾN MÃI
+              </h3>
+            </center>
+            <table>
+              <tr>
+                <td style={{ width: "40%" }} rowSpan={2}>
+                  <img src="/Home_Resources/News_1.jpg" alt="true" />
+                </td>
+                <th>Promotion_1</th>
+              </tr>
+              <tr>
+                <td
+                  style={{
+                    width: "60%",
+                    paddingLeft: "10px",
+                    paddingBottom: "10px",
+                    textAlign: "left",
+                  }}
+                >
+                  this is the first promotion. If you want to change it, please
+                  contact to the system administrator.
+                </td>
+              </tr>
+
+              <tr>
+                <td style={{ width: "30%" }} rowSpan={2}>
+                  <img
+                    className="news-thumbnail"
+                    src="/Home_Resources/News_2.jpg"
+                    alt="true"
+                  />
+                </td>
+                <th>Promotion_2</th>
+              </tr>
+              <tr>
+                <td
+                  style={{
+                    width: "60%",
+                    paddingLeft: "10px",
+                    paddingBottom: "10px",
+                    textAlign: "left",
+                  }}
+                >
+                  this is the second promotion
+                </td>
+              </tr>
+
+              <tr>
+                <td style={{ width: "30%" }} rowSpan={2}>
+                  <img
+                    className="news-thumbnail"
+                    src="/Home_Resources/News_3.jpg"
+                    alt=""
+                  />
+                </td>
+                <th>Promotion_3</th>
+              </tr>
+              <tr>
+                <td
+                  style={{
+                    width: "60%",
+                    paddingLeft: "10px",
+                    paddingBottom: "10px",
+                    textAlign: "left",
+                  }}
+                >
+                  this is the third promoition
+                </td>
+              </tr>
+
+              <tr>
+                <td style={{ width: "30%" }} rowSpan={2}>
+                  <img src="/Home_Resources/News_4.jpg" alt="" />
+                </td>
+                <th>Promotion_4</th>
+              </tr>
+              <tr>
+                <td
+                  style={{
+                    width: "60%",
+                    paddingLeft: "10px",
+                    paddingBottom: "10px",
+                    textAlign: "left",
+                  }}
+                >
+                  this is the fourth promotion
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </section>
+
       <section id="about" className={styles.about}>
         <h3 className={styles.sectionTitle}>About Us</h3>
         <center>
@@ -57,6 +293,7 @@ const Home = () => {
           </p>
         </center>
       </section>
+
       <section id="contact" className={styles.contact}>
         <h3 className={styles.sectionTitle}>Contact Us</h3>
         <center>

@@ -12,19 +12,44 @@
 }
 
 .navbar a:hover {
+<<<<<<< HEAD
   color: #487be7;
+=======
+  color: #9984f9;
+>>>>>>> 20aab8f (Update UI from Home page, header and footer. Fixed show the image into the page. Add some effects forthe home page.)
 }
 
 .hero {
   text-align: center;
-  padding: 50px 20px;
-  background-color: #f0f0f0;
+  padding: 50px 10px;
+  background-color: #f7f7f7;
+}
+
+.hero button {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 5px;
+  padding: 10px;
+  border-radius: 9999px;
+  box-shadow: 0 0.5px 0.5px black;
+}
+.hero button:hover {
+  background-color: #9984f9;
+  color: white;
 }
 
 .services,
 .about,
 .contact {
   padding: 40px 20px;
+}
+
+.about,
+.contact {
+  background-color: #f7f7f7;
+}
+
+.about {
+  margin-top: 100px;
 }
 
 .sectionTitle {
@@ -40,25 +65,54 @@
 }
 
 .card {
+<<<<<<< HEAD
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
   border-radius: 8px;
   margin: 10px 10px 0;
+=======
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
+  padding: 15px;
+  border-radius: 50px;
+  margin: 10px;
+>>>>>>> 20aab8f (Update UI from Home page, header and footer. Fixed show the image into the page. Add some effects forthe home page.)
   width: 300px;
   height: auto;
+  transition:
+    width 0.3s,
+    height 0.3s;
+  transition-timing-function: linear;
+}
+
+.card:hover {
+  width: 330px;
+  height: calc(100%+20px);
 }
 
 img .cardThumbnail {
   text-align: center;
+<<<<<<< HEAD
   align-items: center;
   height: 50%;
+=======
+  border-radius: 40px;
+>>>>>>> 20aab8f (Update UI from Home page, header and footer. Fixed show the image into the page. Add some effects forthe home page.)
 }
 
 .cardTitle {
+  margin-top: 10px;
   text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
 .cardContent {
-  text-align: center;
+  text-align: left;
   padding-top: 20px;
+}
+
+/*Xu li cac thanh phan news va promotion*/
+.info {
+  display: flex;
+  justify-content: space-around;
 }

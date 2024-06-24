@@ -19,7 +19,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+<<<<<<< HEAD
   height: 100px;
+=======
+  height: auto;
+>>>>>>> 20aab8f (Update UI from Home page, header and footer. Fixed show the image into the page. Add some effects forthe home page.)
   color: white;
   font-size: 16px;
   font-weight: 600;
@@ -27,7 +31,12 @@
   margin-bottom: 10px;
 }
 
-.header .logo {
+.header .brand {
+  display: flex;
+  justify-content: normal;
+}
+
+.header .brand .logo {
   display: flex;
   font-size: 35px;
   font-weight: 600;
@@ -35,13 +44,25 @@
   margin-left: 180px;
   align-items: center;
   text-align: center;
-  justify-items: center;
 }
 
 img {
+<<<<<<< HEAD
   display: flex;
   justify-content: center;
   text-align: center;
+=======
+  box-shadow: 0.4px 0.5px 0.5px rgb(65, 65, 65);
+}
+
+.header .brand .thumbnail {
+  display: flex;
+  justify-items: center;
+  width: 15%;
+  border-radius: 100%;
+  margin: 0 10px 0 10px;
+  align-items: center;
+>>>>>>> 20aab8f (Update UI from Home page, header and footer. Fixed show the image into the page. Add some effects forthe home page.)
 }
 
 .header .right {
