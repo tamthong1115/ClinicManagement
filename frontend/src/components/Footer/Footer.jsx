@@ -73,14 +73,14 @@ function Footer() {
                     <div className="text-sm">
                         <p className="mb-2 ">253/6, Ward 11, District 2, City. Ho Chi Minh</p>
                         <p className="mb-2 ">0984 777 666</p>
-                        <p className="mb-2 ">bookingTS@gmail.com</p>
+                        <p className="mb-2 ">Clinic@gmail.com</p>
                     </div>
                 </div>
             </div>
             <div className="mt-8 flex grid items-center justify-around border-t-4 border-white p-4 sm:grid-cols-1 lg:grid-cols-2">
                 <p className="mb-4">Copyright © 1996–2024 BookingTS.com™. All rights reserved.</p>
                 <div className="">
-                    <h3 className="text-2xl">bookingTS.com</h3>
+                    <h3 className="text-2xl">Clinic</h3>
                 </div>
             </div>
         </div>

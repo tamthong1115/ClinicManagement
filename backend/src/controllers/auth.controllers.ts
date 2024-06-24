@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import prisma from '../utils/connectDB';
-import jwt, { JwtPayload } from 'jsonwebtoken';
 import 'dotenv/config';
 import bcrypt from 'bcryptjs';
 import generateToken from '../utils/generateToken';
@@ -8,7 +7,11 @@ import { IGetUserAuthInfoRequest } from '../../@types/custom-types';
 
 export const register = async (req: Request, res: Response) => {
   try {
-    const { username, password } = req.body;
+    const { username, password, confirmPassword } = req.body;
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({ error: 'Passwords do not match' });
+    }
 
     let user = await prisma.user.findFirst({
       where: {
@@ -48,29 +51,20 @@ export const login = async (req: Request, res: Response) => {
     });
 
     if (!user) {
-      return res.status(400).json({ error: 'Invalid credentials' });
+      return res.status(400).json({ error: 'Cannot find account' });
     }
 
     const isMatch = bcrypt.compareSync(password, user.password);
 
     if (!isMatch) {
-      return res.status(400).json({ error: 'Invalid credentials' });
+      return res
+        .status(400)
+        .json({ error: 'Your username or password is incorrect' });
     }
 
-    generateToken(res, user.user_id);
+    const token = generateToken(res, user.id);
 
-    const payload: JwtPayload = {
-      id: user.user_id,
-      username: user.username,
-    };
-
-    jwt.sign(payload, process.env.JWT_SECRET_KEY, (err, token) => {
-      if (err) {
-        throw err;
-      }
-
-      res.status(200).json({ token });
-    });
+    res.status(200).json({ token });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal server error' });

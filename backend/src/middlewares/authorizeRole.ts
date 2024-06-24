@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import { IGetUserAuthInfoRequest } from '../../@types/custom-types';
 import jwt from 'jsonwebtoken';
 import prisma from '../utils/connectDB';
@@ -28,20 +28,23 @@ export const authorizeRole = (allowedRoles: string[]) => {
       }
 
       const user = await prisma.user.findUnique({
-        where: { user_id: decoded.userId },
+        where: { id: decoded.userId },
       });
+
+      console.log(decoded.userId);
 
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
       }
 
-      if (!allowedRoles.includes(user.role)) {
+      // If 'USER' is in allowedRoles, any authenticated user is authorized
+      if (allowedRoles.includes('USER') || allowedRoles.includes(user.role)) {
+        // User is authenticated and authorized
+        req.user = user;
+        next();
+      } else {
         return res.status(403).json({ error: 'Access denied' });
       }
-
-      // User is authenticated and authorized
-      req.user = user;
-      next();
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal server error' });

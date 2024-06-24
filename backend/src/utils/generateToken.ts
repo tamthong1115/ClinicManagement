@@ -10,7 +10,7 @@ const generateToken = (
     const token = jwt.sign(
       { userId: userId },
       process.env.JWT_SECRET_KEY as string,
-      { expiresIn: expiresIn },
+      { expiresIn: expiresIn, algorithm: 'HS256' },
     );
 
     res.cookie('auth_token', token, {

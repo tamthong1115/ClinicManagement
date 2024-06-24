@@ -4,5 +4,5 @@
     "typeRoots": ["./node_modules/@types", "./types", "./@types"],
     "types": ["express"]
   },
-  "include": ["src/**/*", "types/**/*", "@types/**/*"]
+//  "include": ["src/**/*", "types/**/*", "@types/**/*"]
 }
