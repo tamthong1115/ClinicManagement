@@ -14,19 +14,23 @@ const Header = () => {
   return (
     <div>
       <div className={cx("header")}>
-        <img
-          style={{
-            width: "10%",
-            borderRadius: "50%",
-            boxShadow: "2px 5px 10px rgba(0, 0, 0, 0.5)",
-          }}
-          className={cx("/thumbnail.png")}
-          src={"/thumbnail.png"}
-          alt="thumbnail"
-        />
-        <span className={cx("logo")}>
-          <Link to="/">Republic Clinic</Link>
-        </span>
+        <div className={cx("brand")}>
+          <img
+            className={cx("thumbnail")}
+            style={{
+              width: "10%",
+              borderRadius: "50%",
+              boxShadow: "2px 5px 10px rgba(0, 0, 0, 0.5)",
+            }}
+            src="../public/Header_Resources/thumbnail_header.png"
+            alt="thumbnail"
+          />
+          <span className={cx("logo")}>
+            <h3>
+              <Link to="/">Welcome to Clinic+</Link>
+            </h3>
+          </span>
+        </div>
 
         <span className={cx("right")}>
           <div className=" flex">
