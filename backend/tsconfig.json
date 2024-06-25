@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "typeRoots": ["./node_modules/@types", "./types", "./@types"],
+    "types": ["express"]
+  },
+//  "include": ["src/**/*", "types/**/*", "@types/**/*"]
+}
