@@ -17,11 +17,7 @@ router.post('/register', registerValidator, register);
 
 router.post('/login', loginValidator, login);
 
-router.get(
-  '/validate-token',
-  authorizeRole(['CUSTOMER', 'DENTIST', 'CLINIC_OWNER', 'SYSTEM_ADMIN']),
-  getValidateToken,
-);
+router.get('/validate-token', authorizeRole(['USER']), getValidateToken);
 
 // sign out
 router.post('/logout', postLogout);

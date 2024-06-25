@@ -1,7 +1,8 @@
 import { Request } from 'express';
 
 type UserModel = {
-  user_id: string;
+  id: string;
+  username: string;
   first_name?: string;
   last_name?: string;
   role: string;

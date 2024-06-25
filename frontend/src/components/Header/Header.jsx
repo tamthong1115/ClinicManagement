@@ -15,7 +15,6 @@ const Header = () => {
   return (
     <div>
       <div className={cx("header")}>
-<<<<<<< HEAD
         <img
           style={{
             width: "10%",
@@ -28,19 +27,8 @@ const Header = () => {
         />
         <span className={cx("logo")}>
           <Link to="/">Republic Clinic</Link>
+
         </span>
-=======
-        <div className={cx("brand")}>
-          <img
-            className={cx("thumbnail")}
-            src="/Header_Resources/thumbnail_header.png"
-            alt="thumbnail"
-          />
-          <span className={cx("logo")}>
-            <Link to="/">Welcome to Clinic+</Link>
-          </span>
-        </div>
->>>>>>> 20aab8f (Update UI from Home page, header and footer. Fixed show the image into the page. Add some effects forthe home page.)
 
         <span className={cx("right")}>
           <div className=" flex">
