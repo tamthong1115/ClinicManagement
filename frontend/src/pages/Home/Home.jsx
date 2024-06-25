@@ -16,7 +16,7 @@ const Home = () => {
     <div className={styles.container}>
       <img
         style={{ boxShadow: "none" }}
-        src="../public/Home_Resources/Cover-Image.png"
+        src="/Home_Resources/Cover-Image.png"
         alt
       ></img>
 
@@ -46,7 +46,7 @@ const Home = () => {
           <div className={styles.card}>
             <img
               className={styles.cardThumbnail}
-              src="../public/Home_Resources/pic_1_home.jpg"
+              src="/Home_Resources/pic_1_home.jpg"
               alt=""
             />
             <div className={styles.cardTitle}>Bác sĩ chuyên môn cao</div>
@@ -66,7 +66,7 @@ const Home = () => {
           >
             <img
               className={styles.cardThumbnail}
-              src="../public/Home_Resources/pic_2_home.png"
+              src="/Home_Resources/pic_2_home.png"
               alt=""
             />
             <div className={styles.cardTitle}>Cơ sở vật chất hiện đại</div>
@@ -82,7 +82,7 @@ const Home = () => {
           <div className={styles.card}>
             <img
               className={styles.cardThumbnail}
-              src="../public/Home_Resources/pic_3_home.png"
+              src="/Home_Resources/pic_3_home.png"
               alt=""
             />
             <div className={styles.cardTitle}>Hệ thống nha khoa</div>
