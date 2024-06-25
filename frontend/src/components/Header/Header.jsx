@@ -15,7 +15,7 @@ const Header = () => {
     <div>
       <div className={cx("header")}>
         <span className={cx("logo")}>
-          <Link to="/">Booking.com</Link>
+          <Link to="/">Clinic</Link>
         </span>
 
         <span className={cx("right")}>

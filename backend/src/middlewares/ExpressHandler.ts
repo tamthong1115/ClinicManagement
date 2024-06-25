@@ -2,12 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import chalk from 'chalk';
 import CustomError from '../utils/ExpressError';
 
-const ExpressHandler = (
-  err: CustomError,
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+const ExpressHandler = (err: CustomError, req: Request, res: Response) => {
   console.log(
     `${chalk.red(err.statusCode)} ${chalk.red(err.message)} \n${err.stack}`,
   );

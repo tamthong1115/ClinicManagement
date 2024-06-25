@@ -4,10 +4,6 @@ import { getCurrentUser } from '../controllers/user.controllers';
 
 const router = express.Router();
 
-router.get(
-  '/me',
-  authorizeRole(['CUSTOMER', 'DENTIST', 'CLINIC_OWNER']),
-  getCurrentUser,
-);
+router.get('/me', authorizeRole(['USER']), getCurrentUser);
 
 export default router;

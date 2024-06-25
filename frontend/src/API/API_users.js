@@ -5,7 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 export const register = async (formData) => {
   try {
     const response = await axios.post(
-      `${API_BASE_URL}/users/register`,
+      `${API_BASE_URL}/api/users/register`,
       formData,
       {
         withCredentials: true,
@@ -22,12 +22,16 @@ export const register = async (formData) => {
 
 export const login = async (formData) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/users/login`, formData, {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axios.post(
+      `${API_BASE_URL}/api/users/login`,
+      formData,
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     return error.response.data;
@@ -35,7 +39,7 @@ export const login = async (formData) => {
 };
 
 export const validateTokenUser = async () => {
-  const response = await axios.get(`${API_BASE_URL}/api/auth/validateToken`, {
+  const response = await axios.get(`${API_BASE_URL}/api/auth/validate-token`, {
     withCredentials: true,
   });
 
@@ -55,7 +59,7 @@ export const fetchCurrentUser = async () => {
 };
 
 export const signOut = async () => {
-  const response = await axios.get(`${API_BASE_URL}/users/logout`, {
+  const response = await axios.get(`${API_BASE_URL}/api/auth/logout`, {
     withCredentials: true,
   });
 

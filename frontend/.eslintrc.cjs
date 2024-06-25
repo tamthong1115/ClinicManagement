@@ -21,11 +21,21 @@ module.exports = {
   settings: { react: { version: "18.2" } },
   plugins: ["react-refresh", "import"],
   rules: {
+    "no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "args": "after-used",
+        "ignoreRestSiblings": true,
+        "argsIgnorePattern": "^_"
+      }
+    ],
     "react-refresh/only-export-components": [
       "warn",
       { allowConstantExport: true },
     ],
     "import/newline-after-import": ["error", { count: 1 }],
     "react/prop-types": "off",
+          "react/react-in-jsx-scope": "off"
   },
 };

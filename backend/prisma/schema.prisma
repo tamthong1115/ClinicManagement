@@ -7,7 +7,7 @@
 datasource db {
   provider          = "postgresql"
   url               = env("DATABASE_URL")
-  directUrl         = env("DIRECT_URL")
+  // directUrl         = env("DIRECT_URL")
 }
 
 generator client {
@@ -15,15 +15,19 @@ generator client {
 }
 
 model User {
-  user_id          String          @id @default(uuid())
+  id                String          @id @default(uuid())
   username         String       @unique @db.VarChar(25)
   password         String       @db.VarChar(255)
   role             Role         @default(CUSTOMER)
   first_name       String?
   last_name        String?
+  email               String?              @db.VarChar(255)
+  phone_number        String?              @db.VarChar(20)
+  address             String?              @db.VarChar(255)
+  date_of_birth       DateTime?            @db.Timestamp(6)
   Customer         Customer?
   Dentist          Dentist?
-  Clinic           Clinic?
+  clinicOwner     ClinicOwner?
   SystemAdmin      SystemAdmin?
   sentMessages     Message[]    @relation("MessageSender")
   receivedMessages Message[]    @relation("MessageReceiver")
@@ -37,73 +41,73 @@ enum Role {
 }
 
 model Customer {
-  customer_id         String               @id @default(uuid())
+  id                  String               @id @default(uuid())
   user_id             String                  @unique
-  name                String               @db.VarChar(255)
-  email               String?              @db.VarChar(255)
-  phone_number        String?              @db.VarChar(20)
-  address             String?              @db.VarChar(255)
-  date_of_birth       DateTime?            @db.Timestamp(6)
   appointments        Appointment[]
   periodic_treatments PeriodicTreatment[]
-  User                User                 @relation(fields: [user_id], references: [user_id])
+  User                User                 @relation(fields: [user_id], references: [id])
   invoices            Invoice[]
 }
 
 model Dentist {
-  dentist_id          String               @id @default(uuid())
+  id                  String               @id @default(uuid())
   user_id             String               @unique
-  name                String               @db.VarChar(255)
-  email               String               @db.VarChar(255)
-  phone_number        String?              @db.VarChar(20)
   specialization      String               @db.VarChar(255)
   certificate         String[]             @db.VarChar(255)  // img url
   isApproved          Boolean              @default(false)
-  appointments        Appointment[]
-  periodic_treatments PeriodicTreatment[]
-  User                User                 @relation(fields: [user_id], references: [user_id])
-  clinics             Clinic[]
+  appointments        DentistAppointment[]
+  periodic_treatments DentistPeriodicTreatment[]
+  User                User                 @relation(fields: [user_id], references: [id])
+  clinics             DentistClinic[]
   invoices            Invoice[]
 }
 
-model Clinic {
-  clinic_id           String               @id @default(uuid())
+model ClinicOwner{
+  id                  String               @id @default(uuid())
   user_id             String               @unique
-  discount_id         String               @unique
+  clinics             Clinic[]
+  User                User                 @relation(fields: [user_id], references: [id])
+}
+
+model Clinic {
+  id                  String               @id @default(uuid())
+  clinic_owner_id     String               @unique
   name                String               @db.VarChar(255)
   address             String               @db.VarChar(255)
+  city                String               @db.VarChar(255)
+  country             String               @db.VarChar(255)
+  description         String               @db.VarChar(255)
   email               String               @db.VarChar(255)
   phone_number        String               @db.VarChar(20)
-  open_time           DateTime             @db.Time(6)
-  close_time          DateTime             @db.Time(6)
+  open_time           Int
+  close_time          Int
   time_slot           Int                  // duration in minutes
-  image               String[]             @db.VarChar(255)
-  max_patients_per_slot Int
-  max_treatments_per_slot Int
-  appointments        Appointment[]
-  periodic_treatments PeriodicTreatment[]
-  User                User                 @relation(fields: [user_id], references: [user_id])
-  dentists            Dentist[]
+  imageUrls           String[]             @db.VarChar(255) 
+  imagePublicIds      String[]             @db.VarChar(255)  
   latitude            Decimal              @db.Decimal
   longitude           Decimal              @db.Decimal
+  max_patients_per_slot Int
+  max_treatments_per_slot Int
+  appointments        ClinicAppointment[]
+  periodic_treatments ClinicPeriodicTreatment[]
+  dentists            DentistClinic[]
   invoices            Invoice[]
-  discount            Discount[]
+  discount            ClinicDiscount[]
+  clinic_owner        ClinicOwner        @relation(fields: [clinic_owner_id], references: [id])
 
 }
 
 model Appointment {
-  appointment_id      String               @id @default(uuid())
+  id                  String                             @id @default(uuid())
   customer_id         String
-  dentist_id          String
   clinic_id           String
-  discount_id         String
-  date                DateTime             @db.Timestamp(6)
-  start_time          DateTime             @db.Time(6)
+  date                DateTime                          @db.Timestamp(6)
+  start_time          DateTime                          @db.Time(6)
   total_charge        Float
   status              AppointmentStatus
-  Customer            Customer             @relation(fields: [customer_id], references: [customer_id])
-  Dentist             Dentist              @relation(fields: [dentist_id], references: [dentist_id])
-  Clinic              Clinic               @relation(fields: [clinic_id], references: [clinic_id])
+  Customer            Customer                          @relation(fields: [customer_id], references: [id])
+  Dentist             DentistAppointment[]              
+  Clinic              ClinicAppointment[]
   Invoice             Invoice?
   discount            Discount[]
 
@@ -117,7 +121,7 @@ enum AppointmentStatus {
 }
 
 model PeriodicTreatment {
-  periodic_treatment_id String              @id @default(uuid())
+  id                    String              @id @default(uuid())
   customer_id           String
   dentist_id            String
   clinic_id             String
@@ -127,16 +131,15 @@ model PeriodicTreatment {
   end_date              DateTime             @db.Timestamp(6)
   frequency             Int                  // frequency in months
   charge_per_periodic   Float
-  Customer              Customer             @relation(fields: [customer_id], references: [customer_id])
-  Dentist               Dentist              @relation(fields: [dentist_id], references: [dentist_id])
-  Clinic                Clinic               @relation(fields: [clinic_id], references: [clinic_id])
+  Customer              Customer             @relation(fields: [customer_id], references: [id])
+  Dentist               DentistPeriodicTreatment[]
+  Clinic                ClinicPeriodicTreatment[]
   Invoice               Invoice?
   discount              Discount[]
-
 }
 
 model Invoice { 
-  invoice_id             String          @id @default(uuid())
+  id                     String          @id @default(uuid())
   customer_id            String
   dentist_id             String
   clinic_id              String
@@ -145,16 +148,16 @@ model Invoice {
   periodic_treatment_id  String?                 @unique
   total_charge           Float
   payment_status         PaymentStatus
-  Customer               Customer             @relation(fields: [customer_id], references: [customer_id])
-  Dentist                Dentist              @relation(fields: [dentist_id], references: [dentist_id])
-  Clinic                 Clinic               @relation(fields: [clinic_id], references: [clinic_id])
-  Appointment            Appointment?         @relation(fields: [appointment_id], references: [appointment_id])
-  PeriodicTreatment      PeriodicTreatment?   @relation(fields: [periodic_treatment_id], references: [periodic_treatment_id])
+  Customer               Customer             @relation(fields: [customer_id], references: [id])
+  Dentist                Dentist              @relation(fields: [dentist_id], references: [id])
+  Clinic                 Clinic               @relation(fields: [clinic_id], references: [id])
+  Appointment            Appointment?         @relation(fields: [appointment_id], references: [id])
+  PeriodicTreatment      PeriodicTreatment?   @relation(fields: [periodic_treatment_id], references: [id])
   discount               Discount[]
 }
 
 model Discount {
-  discount_id            String          @id @default(uuid())
+  id            String          @id @default(uuid())
   code                   String               @unique @db.VarChar(255)
   pertentage             Float               
   start_date             DateTime             @db.Timestamp(6)
@@ -162,7 +165,7 @@ model Discount {
   invoices               Invoice[]
   appointments           Appointment[]
   periodic_treatments    PeriodicTreatment[]
-  clinics                Clinic[]
+  clinics                ClinicDiscount[]
 }
 
 
@@ -173,17 +176,79 @@ enum PaymentStatus {
 }
 
 model Message {
-  message_id    String          @id @default(uuid())
+  id    String          @id @default(uuid())
   sender_id     String
   receiver_id   String
   content       String               @db.VarChar(255)
   sent_at       DateTime             @default(now()) @db.Timestamp(6)
-  Sender        User                 @relation("MessageSender", fields: [sender_id], references: [user_id])
-  Receiver      User                 @relation("MessageReceiver", fields: [receiver_id], references: [user_id])
+  Sender        User                 @relation("MessageSender", fields: [sender_id], references: [id])
+  Receiver      User                 @relation("MessageReceiver", fields: [receiver_id], references: [id])
 }
 
 model SystemAdmin {
-  admin_id      String          @id @default(uuid())
+  id            String          @id @default(uuid())
   user_id       String                  @unique
-  User          User                 @relation(fields: [user_id], references: [user_id])
+  User          User                 @relation(fields: [user_id], references: [id])
+}
+
+
+// many to many relationship
+model DentistClinic {
+  dentist       Dentist @relation(fields: [dentist_id], references: [id])
+  dentist_id    String
+  clinic        Clinic  @relation(fields: [clinic_id], references: [id])
+  clinic_id     String
+  assignedAt    DateTime @default(now())
+
+  @@id([dentist_id, clinic_id])
+}
+
+model DentistAppointment {
+  dentist       Dentist @relation(fields: [dentist_id], references: [user_id])
+  dentist_id    String
+  appointment   Appointment @relation(fields: [appointment_id], references: [id])
+  appointment_id String
+  assignedAt    DateTime @default(now())
+
+  @@id([dentist_id, appointment_id])
+}
+
+model DentistPeriodicTreatment {
+  dentist       Dentist @relation(fields: [dentist_id], references: [user_id])
+  dentist_id    String
+  periodic_treatment   PeriodicTreatment @relation(fields: [periodic_treatment_id], references: [id])
+  periodic_treatment_id String
+  assignedAt    DateTime @default(now())
+
+  @@id([dentist_id, periodic_treatment_id])
+}
+
+model ClinicDiscount {
+  clinic       Clinic @relation(fields: [clinic_id], references: [id])
+  clinic_id    String
+  discount     Discount @relation(fields: [discount_id], references: [id])
+  discount_id  String
+  assignedAt   DateTime @default(now())
+
+  @@id([clinic_id, discount_id])
+}
+
+model ClinicAppointment {
+  clinic       Clinic @relation(fields: [clinic_id], references: [id])
+  clinic_id    String
+  appointment  Appointment @relation(fields: [appointment_id], references: [id])
+  appointment_id String
+  assignedAt   DateTime @default(now())
+
+  @@id([clinic_id, appointment_id])
+}
+
+model ClinicPeriodicTreatment {
+  clinic       Clinic @relation(fields: [clinic_id], references: [id])
+  clinic_id    String
+  periodic_treatment   PeriodicTreatment @relation(fields: [periodic_treatment_id], references: [id])
+  periodic_treatment_id String
+  assignedAt    DateTime @default(now())
+
+  @@id([clinic_id, periodic_treatment_id])
 }
