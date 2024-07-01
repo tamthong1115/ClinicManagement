@@ -1,15 +1,7 @@
 import styles from "./Home.module.css";
 import React, { useRef, useEffect } from "react";
-
-function GetHeigth() {
-  const eleRef = useRef(null);
-  useEffect(() => {
-    if (eleRef.current) {
-      const height = eleRef.current.clientHeight;
-      return height + 10;
-    }
-  }, []);
-}
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Slideshow from "../../components/SlideShowGallery/Slideshow";
 
 const Home = () => {
   return (
@@ -35,7 +27,9 @@ const Home = () => {
           Đặt lịch ngay hôm nay để nhận nhiều ưu đãi hấp dẫn. Nhanh tay lên nào
           mọi người ơi!
         </p>
-        <button type="button">Đặt lịch ngay!!!</button>
+        <button type="button">
+          <a href="">Đặt lịch ngay!!!</a>
+        </button>
       </section>
 
       <section id="services" className={styles.services}>
@@ -98,108 +92,34 @@ const Home = () => {
         </div>
       </section>
 
+      <section id="about" className={styles.about}>
+        <h3 className={styles.sectionTitle}>Về chúng tôi</h3>
+        <center>
+          <p>
+            We are a team of dedicated healthcare professionals here to serve
+            you.
+          </p>
+        </center>
+      </section>
+
       <section id="info" className={styles.info}>
-        <div style={{ width: "500px" }} className={styles.card}>
-          <center>
-            <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
-              TIN TỨC
-            </h3>
-          </center>
-          <table>
-            <tr>
-              <td style={{ width: "40%" }} rowSpan={2}>
-                <img src="/Home_Resources/News_1.jpg" alt="true" />
-              </td>
-              <th style={{}}>News_1</th>
-            </tr>
-            <tr>
-              <td
-                style={{
-                  width: "60%",
-                  paddingLeft: "10px",
-                  paddingBottom: "10px",
-                  textAlign: "left",
-                }}
-              >
-                this is the first news. If you want to change it, please contact
-                to the system administrator.
-              </td>
-            </tr>
-
-            <tr>
-              <td style={{ width: "30%" }} rowSpan={2}>
-                <img src="/Home_Resources/News_2.jpg" alt="true" />
-              </td>
-              <th>News_2</th>
-            </tr>
-            <tr>
-              <td
-                style={{
-                  width: "60%",
-                  paddingLeft: "10px",
-                  paddingBottom: "10px",
-                  textAlign: "left",
-                }}
-              >
-                this is the second news. If you want to change it, please
-                contact to the system administrator.
-              </td>
-            </tr>
-
-            <tr>
-              <td style={{ width: "30%" }} rowSpan={2}>
-                <img src="/Home_Resources/News_3.jpg" alt="" />
-              </td>
-              <th>News_3</th>
-            </tr>
-            <tr>
-              <td
-                style={{
-                  width: "60%",
-                  paddingLeft: "10px",
-                  paddingBottom: "10px",
-                  textAlign: "left",
-                }}
-              >
-                this is the third news. If you want to change it, please contact
-                to the system administrator.
-              </td>
-            </tr>
-
-            <tr>
-              <td style={{ width: "30%" }} rowSpan={2}>
-                <img src="/Home_Resources/News_4.jpg" alt="" />
-              </td>
-              <th>News_4</th>
-            </tr>
-            <tr>
-              <td
-                style={{
-                  width: "60%",
-                  paddingLeft: "10px",
-                  paddingBottom: "10px",
-                  textAlign: "left",
-                }}
-              >
-                this is the fourth news
-              </td>
-            </tr>
-          </table>
-        </div>
-
-        <div className={styles.promotion}>
-          <div style={{ width: "500px" }} className={styles.card}>
+        <div className={styles.news}>
+          <div style={{ width: "500px" }} className={styles.cardNews}>
             <center>
               <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
-                KHUYẾN MÃI
+                TIN TỨC
               </h3>
             </center>
             <table>
               <tr>
                 <td style={{ width: "40%" }} rowSpan={2}>
-                  <img src="/Home_Resources/News_1.jpg" alt="true" />
+                  <a href="#">
+                    <img src="/Home_Resources/News_1.jpg" alt="true" />
+                  </a>
                 </td>
-                <th>Promotion_1</th>
+                <th style={{}}>
+                  <a href="#">News_1</a>
+                </th>
               </tr>
               <tr>
                 <td
@@ -210,8 +130,127 @@ const Home = () => {
                     textAlign: "left",
                   }}
                 >
-                  this is the first promotion. If you want to change it, please
-                  contact to the system administrator.
+                  <a href="#">
+                    this is the first news. If you want to change it, please
+                    contact to the system administrator.
+                  </a>
+                </td>
+              </tr>
+
+              <tr>
+                <td style={{ width: "30%" }} rowSpan={2}>
+                  <a href="#">
+                    <img src="/Home_Resources/News_2.jpg" alt="true" />
+                  </a>
+                </td>
+                <th>
+                  <a href="#">News_2</a>
+                </th>
+              </tr>
+              <tr>
+                <td
+                  style={{
+                    width: "60%",
+                    paddingLeft: "10px",
+                    paddingBottom: "10px",
+                    textAlign: "left",
+                  }}
+                >
+                  <a href="#">
+                    this is the first news. If you want to change it, please
+                    contact to the system administrator.
+                  </a>
+                </td>
+              </tr>
+
+              <tr>
+                <td style={{ width: "30%" }} rowSpan={2}>
+                  <a href="#">
+                    <img src="/Home_Resources/News_3.jpg" alt="" />
+                  </a>
+                </td>
+                <th>
+                  <a href="">News_3</a>
+                </th>
+              </tr>
+              <tr>
+                <td
+                  style={{
+                    width: "60%",
+                    paddingLeft: "10px",
+                    paddingBottom: "10px",
+                    textAlign: "left",
+                  }}
+                >
+                  <a href="#">
+                    this is the first news. If you want to change it, please
+                    contact to the system administrator.
+                  </a>
+                </td>
+              </tr>
+
+              <tr>
+                <td style={{ width: "30%" }} rowSpan={2}>
+                  <a href="#">
+                    <img
+                      style={{ borderRadius: "0 0 0 30px" }}
+                      src="/Home_Resources/News_4.jpg"
+                      alt=""
+                    />
+                  </a>
+                </td>
+                <th>
+                  <a href="#">News_4</a>
+                </th>
+              </tr>
+              <tr>
+                <td
+                  style={{
+                    width: "60%",
+                    paddingLeft: "10px",
+                    paddingBottom: "10px",
+                    textAlign: "left",
+                  }}
+                >
+                  <a href="#">
+                    this is the first news. If you want to change it, please
+                    contact to the system administrator.
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div className={styles.promotion}>
+          <div style={{ width: "500px" }} className={styles.cardPromotion}>
+            <center>
+              <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
+                KHUYẾN MÃI
+              </h3>
+            </center>
+            <table>
+              <tr>
+                <td style={{ width: "40%" }} rowSpan={2}>
+                  <img src="/Home_Resources/News_1.jpg" alt="true" />
+                </td>
+                <th>
+                  <a href="#">Promotion_1</a>
+                </th>
+              </tr>
+              <tr>
+                <td
+                  style={{
+                    width: "60%",
+                    paddingLeft: "10px",
+                    paddingBottom: "10px",
+                    textAlign: "left",
+                  }}
+                >
+                  <a href="#">
+                    this is the first news. If you want to change it, please
+                    contact to the system administrator.
+                  </a>
                 </td>
               </tr>
 
@@ -223,7 +262,9 @@ const Home = () => {
                     alt="true"
                   />
                 </td>
-                <th>Promotion_2</th>
+                <th>
+                  <a href="#">Promotion_2</a>
+                </th>
               </tr>
               <tr>
                 <td
@@ -234,19 +275,26 @@ const Home = () => {
                     textAlign: "left",
                   }}
                 >
-                  this is the second promotion
+                  <a href="#">
+                    this is the first news. If you want to change it, please
+                    contact to the system administrator.
+                  </a>{" "}
                 </td>
               </tr>
 
               <tr>
                 <td style={{ width: "30%" }} rowSpan={2}>
-                  <img
-                    className="news-thumbnail"
-                    src="/Home_Resources/News_3.jpg"
-                    alt=""
-                  />
+                  <a href="#">
+                    <img
+                      className="news-thumbnail"
+                      src="/Home_Resources/News_3.jpg"
+                      alt=""
+                    />
+                  </a>
                 </td>
-                <th>Promotion_3</th>
+                <th>
+                  <a href="#">Promotion_3</a>
+                </th>
               </tr>
               <tr>
                 <td
@@ -257,15 +305,26 @@ const Home = () => {
                     textAlign: "left",
                   }}
                 >
-                  this is the third promoition
+                  <a href="#">
+                    this is the first news. If you want to change it, please
+                    contact to the system administrator.
+                  </a>{" "}
                 </td>
               </tr>
 
               <tr>
                 <td style={{ width: "30%" }} rowSpan={2}>
-                  <img src="/Home_Resources/News_4.jpg" alt="" />
+                  <a href="#">
+                    <img
+                      style={{ borderRadius: "0 0 0 30px" }}
+                      src="/Home_Resources/News_4.jpg"
+                      alt=""
+                    />
+                  </a>
                 </td>
-                <th>Promotion_4</th>
+                <th>
+                  <a href="#">Promotion_4</a>
+                </th>
               </tr>
               <tr>
                 <td
@@ -276,7 +335,10 @@ const Home = () => {
                     textAlign: "left",
                   }}
                 >
-                  this is the fourth promotion
+                  <a href="#">
+                    this is the first news. If you want to change it, please
+                    contact to the system administrator.
+                  </a>{" "}
                 </td>
               </tr>
             </table>
@@ -284,23 +346,15 @@ const Home = () => {
         </div>
       </section>
 
-      <section id="about" className={styles.about}>
-        <h3 className={styles.sectionTitle}>About Us</h3>
-        <center>
-          <p>
-            We are a team of dedicated healthcare professionals here to serve
-            you.
-          </p>
-        </center>
-      </section>
-
       <section id="contact" className={styles.contact}>
-        <h3 className={styles.sectionTitle}>Contact Us</h3>
+        <h3 className={styles.sectionTitle}>Liên hệ với chúng tôi:</h3>
         <center>
           <p>Email: contact@clinicplus.com</p>
           <p>Phone: (123) 456-7890</p>
         </center>
       </section>
+
+      <Slideshow />
     </div>
   );
 };
