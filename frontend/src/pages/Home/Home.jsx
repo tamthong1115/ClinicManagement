@@ -1,15 +1,7 @@
 import styles from "./Home.module.css";
 import React, { useRef, useEffect } from "react";
-
-function GetHeigth() {
-  const eleRef = useRef(null);
-  useEffect(() => {
-    if (eleRef.current) {
-      const height = eleRef.current.clientHeight;
-      return height + 10;
-    }
-  }, []);
-}
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Slideshow from "../../components/SlideShowGallery/Slideshow";
 
 const Home = () => {
   return (
@@ -35,7 +27,9 @@ const Home = () => {
           Đặt lịch ngay hôm nay để nhận nhiều ưu đãi hấp dẫn. Nhanh tay lên nào
           mọi người ơi!
         </p>
-        <button type="button">Đặt lịch ngay!!!</button>
+        <button type="button">
+          <a href="">Đặt lịch ngay!!!</a>
+        </button>
       </section>
 
       <section id="services" className={styles.services}>
@@ -96,6 +90,16 @@ const Home = () => {
             </div>
           </div>
         </div>
+      </section>
+
+      <section id="about" className={styles.about}>
+        <h3 className={styles.sectionTitle}>Về chúng tôi</h3>
+        <center>
+          <p>
+            We are a team of dedicated healthcare professionals here to serve
+            you.
+          </p>
+        </center>
       </section>
 
       <section id="info" className={styles.info}>
@@ -188,7 +192,11 @@ const Home = () => {
               <tr>
                 <td style={{ width: "30%" }} rowSpan={2}>
                   <a href="#">
-                    <img src="/Home_Resources/News_4.jpg" alt="" />
+                    <img
+                      style={{ borderRadius: "0 0 0 30px" }}
+                      src="/Home_Resources/News_4.jpg"
+                      alt=""
+                    />
                   </a>
                 </td>
                 <th>
@@ -307,7 +315,11 @@ const Home = () => {
               <tr>
                 <td style={{ width: "30%" }} rowSpan={2}>
                   <a href="#">
-                    <img src="/Home_Resources/News_4.jpg" alt="" />
+                    <img
+                      style={{ borderRadius: "0 0 0 30px" }}
+                      src="/Home_Resources/News_4.jpg"
+                      alt=""
+                    />
                   </a>
                 </td>
                 <th>
@@ -334,16 +346,6 @@ const Home = () => {
         </div>
       </section>
 
-      <section id="about" className={styles.about}>
-        <h3 className={styles.sectionTitle}>Về chúng tôi</h3>
-        <center>
-          <p>
-            We are a team of dedicated healthcare professionals here to serve
-            you.
-          </p>
-        </center>
-      </section>
-
       <section id="contact" className={styles.contact}>
         <h3 className={styles.sectionTitle}>Liên hệ với chúng tôi:</h3>
         <center>
@@ -351,6 +353,8 @@ const Home = () => {
           <p>Phone: (123) 456-7890</p>
         </center>
       </section>
+
+      <Slideshow />
     </div>
   );
 };

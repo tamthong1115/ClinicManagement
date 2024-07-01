@@ -20,9 +20,9 @@ const Header = () => {
             style={{
               width: "10%",
               borderRadius: "50%",
-              boxShadow: "2px 5px 10px rgba(0, 0, 0, 0.5)",
+              boxShadow: "0 1px 2px rgba(0, 0, 0, 1)",
             }}
-            src="../public/Header_Resources/thumbnail_header.png"
+            src="/Header_Resources/thumbnail_header.png"
             alt="thumbnail"
           />
           <span className={cx("logo")}>
